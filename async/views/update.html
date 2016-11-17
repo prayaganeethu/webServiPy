@@ -1,15 +1,40 @@
+<!doctype html>
 <html>
-    <head>
-        <title>Update your profile here</title>
-    </head>
-    <body>
-        <form action="/profile_update" method="post" enctype="multipart/form-data">
-            Name: <input type="text" name="name"/><br/><br/>
-            Date of Birth: <input type="date" name="dob"/><br/><br/>
-            Photo: <input type="file" name="profile" accept="image/jpeg"/><br/><br/>
-            Gender: <input type="radio" name="gender" value="male"/>Male
-            <input type="radio" name="gender" value="female"/>Female<br/><br/>
-            <button type="submit">Update!</button>
-        </form>
-    </body> 
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>Edit Profile</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div id="header">
+
+        <ul>
+            <li>
+                <a class="active" href="home.html"><img src="image/logo.png" style="margin:-10px;" /> Home</a>
+            </li>
+            <li><a href="#">Link2</a></li>
+            <li><a href="#">Link3</a></li>
+        </ul>
+
+    </div>
+    <div id="form">
+      <form method="post" action="http://192.168.42.119:8080/update" enctype="multipart/form-data">
+        <label class="form-label">First Name: </label><input type="text" id="fname" name="fname" required></br>
+        <label class="form-label">Last Name : </label><input type="text" id="lname" name="lname" required></br>
+        <label class="form-label">Email : </label><input type="email" id="email" name="email" required></br>
+        <label class="form-label">Upload Profile : </label><input type="file" name="blob"  value="Choose a file" accept="image/jpeg" required></br>
+        <label class="form-label">Contact Address: </label><textarea name="contactAddress" id="contactAddress" rows="5" required></textarea></br>
+        <label class="form-label">Hometown : </label><input type="text" id="hometown" name="hometown" required></br>
+        <label class="form-label">Date of Birth : </label><input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" required pattern="\d{1,2}/\d{1,2}/\d{4}" title="DD/MM/YYYY"></br>
+        <label class="form-label">Date of Joining : </label><input type="text" id="doj" name="doj" placeholder="DD/MM/YYYY" required pattern="\d{1,2}/\d{1,2}/\d{4}" title="DD/MM/YYYY"></br>
+        <label class="form-label">ID Proof : </label><input type="file" id="idproof" name="idproof" value="Choose a file" accept="application/pdf" required></br>
+        <label class="form-label">Address Proof : </label><input type="file" id="adproof" name="adproof" value="Choose a file" accept="application/pdf" required></br>
+        <button type="submit"  class="green-button" name="button">Send</button>
+  </form>
+    </div>
+</body>
+
 </html>

@@ -1,3 +1,126 @@
-html {
-    background-color: #0ff05f
+body{
+  background-image: url(../image/background.jpg);
+}
+#login-box{
+  position: absolute;
+  right: 200px;
+  top:250px;
+}
+.btn-login{
+  border-radius: 10px;
+  font-size: 30px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #42f4ad;
+  border-color: #42f4ad;
+}
+#heading{
+  position: absolute;
+  top:200px;
+  left: 100px;
+  color: white;
+}
+#heading h1{
+  font-weight: bold;
+  font-size: 50px;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width:100%;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+#form{
+  background-color: white;
+  position: absolute;
+  top:8%;
+  left: 15%;
+  width: 70%;
+  padding: 10px;
+}
+#profileImage{
+  position: absolute;
+  right: 100px;
+  top:20px;
+}
+#form * {
+    vertical-align: middle;
+}
+#contactAddress{
+  width: 300px;
+  resize: none;
+}
+#form input[type=text], #form input[type=email] {
+    width: 300px;
+    padding: 5px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+#form input[type=file]{
+  padding: 5px 5px;
+  margin: 8px 0;
+}
+.form-label{
+  width:200px !important;
+  font-weight: normal;
+  display: inline-block;
+
+}
+
+  .green-button {
+    position: relative;
+left:200px;
+	background-color:#44c767;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Impact;
+	font-size:17px;
+	font-weight:bold;
+	padding:10px 18px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.green-button:hover {
+	background-color:#59bd81;
+}
+.green-button:active {
+	position:relative;
+	top:1px;
+}
+#wrapper{
+  background-color: white;
+margin-left:10%;
+margin-left:10%;
+margin-top: 5%;
+width: 80%;
+padding: 20px;
+
+
 }
