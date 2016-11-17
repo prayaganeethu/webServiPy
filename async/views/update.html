@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Update your profile here</title>
+    </head>
+    <body>
+        <form action="/profile_update" method="post" enctype="multipart/form-data">
+            Name: <input type="text" name="name"/><br/><br/>
+            Date of Birth: <input type="date" name="dob"/><br/><br/>
+            Photo: <input type="file" name="profile" accept="image/jpeg"/><br/><br/>
+            Gender: <input type="radio" name="gender" value="male"/>Male
+            <input type="radio" name="gender" value="female"/>Female<br/><br/>
+            <button type="submit">Update!</button>
+        </form>
+    </body> 
+</html>
