@@ -114,7 +114,7 @@ def profile(request, response):
                 data += "<p>Address: {0}</p><br/>".format(res[0][4])
                 data += "<p>Hometown: {0}</p><br/>".format(res[0][5])
                 data += "<p>Date of joining: {0}</p><br/>".format(res[0][7])
-                data += """<img src='./profile_pic/{0}.jpg' width='200px' height='200px'/>
+                data += """<img src='./storage/profile_pic/{0}.jpg' width='200px' height='200px'/>
                         <br/>""".format(session_data["user_id"])
                 data += "<a href='/update'>Update details here</a>"
                 data += html_tail()
@@ -146,16 +146,16 @@ def profile_update(request, response):
         id_proof = request["content"]["idproof"]
         address_proof = request["content"]["adproof"]
 
-        file_name = "./storage/profile_pic/{0}.jpg".format(session_data[
-                                                           "user_id"])
+        file_name = "./public/storage/profile_pic/{0}.jpg".format(session_data[
+            "user_id"])
         with open(file_name, "wb") as f:
             f.write(profile_pic)
-        file_name2 = "./storage/id_proof/{0}.pdf".format(
+        file_name2 = "./public/storage/id_proof/{0}.pdf".format(
             session_data["user_id"])
         with open(file_name2, "wb") as f:
             f.write(id_proof)
-        file_name3 = "./storage/address_proof/{0}.pdf".format(session_data[
-                                                              "user_id"])
+        file_name3 = "./public/storage/address_proof/{0}.pdf".format(session_data[
+            "user_id"])
         with open(file_name3, "wb") as f:
             f.write(address_proof)
         query = """update profile set first_name = ?, last_name = ?, email =?,
