@@ -15,9 +15,13 @@ try:
     table_create = """
 create table if not exists profile(
 id text primary key,
-name text,
-gender text,
-dob text
+first_name text,
+last_name text,
+email text,
+address text,
+hometown text,
+date_of_birth text,
+date_of_joining text
 );"""
     c.execute(table_create)
 except IOError:
@@ -103,10 +107,13 @@ def profile(request, response):
             c.execute(query, (session_data["user_id"],))
             res = c.fetchall()
             if res[0][1]:
-                data += "<p>Name: {0}</p><br/>".format(res[0][1])
-                data += "<p>Gender: {0}</p><br/>".format(res[0][2])
-                data += "<p>Date of Birth: {0}</p><br/>".format(res[0][3])
-                data += """<img src='./uploads/{0}.jpg' width='200px' height='200px'/>
+                data += "<p>Name: {0} + {1}</p><br/>".format(res[0][1],res[0][2])
+                data += "<p>Email: {0}</p><br/>".format(res[0][3])
+                data += "<p>Date of Birth: {0}</p><br/>".format(res[0][6])
+                data += "<p>Address: {0}</p><br/>".format(res[0][4])
+                data += "<p>Hometown: {0}</p><br/>".format(res[0][5])
+                data += "<p>Date of joining: {0}</p><br/>".format(res[0][7])                
+                data += """<img src='./profile_pic/{0}.jpg' width='200px' height='200px'/>
                         <br/>""".format(session_data["user_id"])
                 data += "<a href='/update'>Update details here</a>"
                 data += html_tail()
@@ -127,16 +134,29 @@ def update(request, response):
 def profile_update(request, response):
     session_data = server.get_session(request)
     if session_data and "user_id" in session_data:
-        name = request["content"]["name"]
+        first_name = request["content"]["fname"]
+        last_name = request["content"]["lname"]
+        email = request["content"]["email"]
+        profile_pic = request["content"]["blob"]
+        address = request["content"]["contactAddress"]
         date_of_birth = request["content"]["dob"]
-        gender = request["content"]["gender"]
-        profile_pic = request["content"]["profile"]
-        file_name = "./public/uploads/{0}.jpg".format(session_data["user_id"])
+        date_of_joining = request["content"]["doj"]
+        id_proof = request["content"]["idproof"]
+        address_proof = request["content"]["adproof"]
+        
+        file_name = "./storage/profile_pic/{0}.jpg".format(session_data["user_id"])
         with open(file_name, "wb") as f:
             f.write(profile_pic)
-        query = "update profile set name=?, dob=?, gender=? where id=?"
-        c.execute(query, (name, date_of_birth,
-                          gender, session_data["user_id"]))
+        file_name2 = "./storage/id_proof/{0}.pdf".format(session_data["user_id"])
+        with open(file_name2, "wb") as f:
+            f.write(id_proof)
+        file_name3 = "./storage/address_proof/{0}.pdf".format(session_data["user_id"])
+        with open(file_name3, "wb") as f:
+            f.write(address_proof)
+        query = """update profile set first_name = ?, last_name = ?, email =?,
+                   address=?, hometown=?, date_of_birth=?, date_of_joining=? """
+        c.execute(query, (first_name, last_name, email, address, hometown, date_of_birth,
+                          date_of_joining, session_data["user_id"]))
         con.commit()
         return profile(request, response)
     return server.err_404_handler(request, response)
