@@ -376,10 +376,7 @@ def check_content(headers):
 async def handle_connections(reader, writer):
     addr = writer.get_extra_info("peername")
     print("Connection from:{0}".format(addr))
-    try:
-        header = await reader.readuntil(b"\r\n\r\n")
-    except asyncio.streams.IncompleteReadError as e:
-        pass
+    header = await reader.readuntil(b"\r\n\r\n")
     content_length = check_content(header)
     data = header
     pprint.pprint(header.decode())
