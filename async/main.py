@@ -21,7 +21,8 @@ email text,
 address text,
 hometown text,
 date_of_birth text,
-date_of_joining text
+date_of_joining text,
+ph_no text
 );"""
     c.execute(table_create)
 except IOError:
@@ -84,14 +85,15 @@ def callback(request, response):
         env["AUTH0_DOMAIN"], token_info['access_token'])
     user_info = requests.get(user_url).json()
     user_id = user_info["identities"][0]["user_id"]
+    ph_no = user_info["phone_number"]
     content = {"user_id": user_id}
     server.add_session(request, content)
     get_query = "select count(*) from profile where id=(?)"
     c.execute(get_query, (user_id,))
     (no_rows,) = c.fetchone()
     if not no_rows:
-        query = "insert into profile (id) values (?)"
-        c.execute(query, (user_id,))
+        query = "insert into profile (id, ph_no) values (?, ?)"
+        c.execute(query, (user_id, ph_no,))
         con.commit()
     return profile(request, response)
 
@@ -117,10 +119,12 @@ def profile(request, response):
             if res[0][1]:
                 with open("./views/profile.html", "r") as f:
                     data = f.read()
-                print("data")
-                data = data.format(id=res[0][0], fname=res[0][1], lname=res[0][2], email=res[0][3], address=res[
-                                   0][4], hometown=res[0][5], date_of_birth=res[0][6], date_of_joining=res[0][7])
-                print("welcome")
+                data = data.format(id=res[0][0], fname=res[0][1],
+                                   lname=res[0][2], email=res[0][3],
+                                   ph_no=res[0][8],
+                                   address=res[0][4], hometown=res[0][5],
+                                   date_of_birth=res[0][6],
+                                   date_of_joining=res[0][7])
                 return server.send_html_handler(request, response, data)
         return update(request, response)
     return home(request, response)
