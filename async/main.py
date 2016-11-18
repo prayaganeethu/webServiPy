@@ -99,33 +99,21 @@ def callback(request, response):
 def profile(request, response):
     session_data = server.get_session(request)
     if session_data and "user_id" in session_data:
+        print("in profile")
         data = html_head()
         get_query = "select count(*) from profile where id=(?)"
-        print("id" in request["content"] and request["content"][
-              "id"] and session_data["user_id"] == "5820148e514cff820b882897")
-        if "id" in request["content"] and request["content"]["id"] and session_data["user_id"] == "5820148e514cff820b882897":
-            id = request["content"]["id"]
-            c.execute(get_query, (request["content"]["id"],))
-        else:
-            id = session_data["user_id"]
-            c.execute(get_query, (session_data["user_id"],))
+        c.execute(get_query, (session_data["user_id"],))
         (no_rows,) = c.fetchone()
         if no_rows:
             query = "select * from profile where id=(?)"
-            c.execute(query, (id,))
+            c.execute(query, (session_data["user_id"],))
             res = c.fetchall()
             if res[0][1]:
-                data += "<p>Name: {0} {1}</p><br/>".format(
-                    res[0][1], res[0][2])
-                data += "<p>Email: {0}</p><br/>".format(res[0][3])
-                data += "<p>Date of Birth: {0}</p><br/>".format(res[0][6])
-                data += "<p>Address: {0}</p><br/>".format(res[0][4])
-                data += "<p>Hometown: {0}</p><br/>".format(res[0][5])
-                data += "<p>Date of joining: {0}</p><br/>".format(res[0][7])
-                data += """<img src='./storage/profile_pic/{0}.jpg' width='200px' height='200px'/>
-                        <br/>""".format(id)
-                data += "<a href='/update'>Update details here</a>"
-                data += html_tail()
+                with open("./views/profile.html", "r") as f:
+                    data = f.read()
+                print("data")
+                data = data.format(id=res[0][0],fname=res[0][1], lname=res[0][2], email=res[0][3], address=res[0][4], hometown=res[0][5],date_of_birth=res[0][6], date_of_joining=res[0][7])
+                print("welcome")
                 return server.send_html_handler(request, response, data)
         data += "Welcome to Profile app<br/>"
         data += "<a href='/update'>Update details here</a>"
