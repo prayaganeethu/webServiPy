@@ -115,10 +115,7 @@ def profile(request, response):
                 data = data.format(id=res[0][0],fname=res[0][1], lname=res[0][2], email=res[0][3], address=res[0][4], hometown=res[0][5],date_of_birth=res[0][6], date_of_joining=res[0][7])
                 print("welcome")
                 return server.send_html_handler(request, response, data)
-        data += "Welcome to Profile app<br/>"
-        data += "<a href='/update'>Update details here</a>"
-        data += html_tail()
-        return server.send_html_handler(request, response, data)
+        return update(request, response)
     return home(request, response)
 
 
