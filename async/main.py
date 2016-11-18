@@ -53,6 +53,7 @@ def build_routes():
     server.add_route("get", "/", home)
     server.add_route("get", "/callback", callback)
     server.add_route("get", "/update", update)
+    server.add_route("get", "/dashboard", dashboard)
     server.add_route("post", "/profile_update", profile_update)
     server.add_route("get", "/profile", profile)
 
@@ -134,9 +135,25 @@ def profile(request, response):
 
 
 def update(request, response):
-    with open("./views/update.html", "r") as f:
-        data = f.read()
-    return server.send_html_handler(request, response, data)
+    session_data = server.get_session(request)
+    if session_data and "user_id" in session_data:
+        with open("./views/update.html", "r") as f:
+            data = f.read()
+        return server.send_html_handler(request, response, data)
+    return home(request,response)
+
+
+def dashboard(request,response):
+    session_data = server.get_session(request)
+    if session_data and "user_id" in session_data:
+        data = ""
+        c.execute("select * from profile")
+        rows = c.fetchall()
+        for row in rows:
+            data += "Name: <a href='/profile?id={0}'>{1}{2}</a>".format(row[0], row[1], row[2])
+            data += "<br/>"
+        return server.send_html_handler(request, response, data) 
+    return home(request, response)
 
 
 def profile_update(request, response):
