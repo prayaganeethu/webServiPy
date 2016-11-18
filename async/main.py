@@ -125,19 +125,21 @@ def update(request, response):
         with open("./views/update.html", "r") as f:
             data = f.read()
         return server.send_html_handler(request, response, data)
-    return home(request,response)
+    return home(request, response)
 
 
-def dashboard(request,response):
+def dashboard(request, response):
     session_data = server.get_session(request)
     if session_data and "user_id" in session_data:
         data = ""
         c.execute("select * from profile")
         rows = c.fetchall()
         for row in rows:
-            data += "Name: <a href='/profile?id={0}'>{1}{2}</a>".format(row[0], row[1], row[2])
+            data += "Name: <a href='/profile?id={0}'>{1}{2}</a>".format(row[0],
+                                                                        row[1],
+                                                                        row[2])
             data += "<br/>"
-        return server.send_html_handler(request, response, data) 
+        return server.send_html_handler(request, response, data)
     return home(request, response)
 
 
