@@ -101,17 +101,15 @@ def callback(request, response):
 def profile(request, response):
     session_data = server.get_session(request)
     if session_data and "user_id" in session_data:
-        print("in profile")
         data = html_head()
         get_query = "select count(*) from profile where id=(?)"
-        print(session_data["user_id"])
-        if "content" in request and "id" in request["content"] and session_data["user_id"] == "5820148e514cff820b882897":
+        if ("content" in request and "id" in request["content"] and
+                session_data["user_id"] == "5820148e514cff820b882897"):
             u_id = request["content"]["id"]
         else:
             u_id = session_data["user_id"]
         c.execute(get_query, (u_id,))
         (no_rows,) = c.fetchone()
-        print("here now")
         if no_rows:
             query = "select * from profile where id=(?)"
             c.execute(query, (u_id,))
@@ -176,8 +174,8 @@ def profile_update(request, response):
             session_data["user_id"])
         with open(file_name2, "wb") as f:
             f.write(id_proof)
-        file_name3 = "./public/storage/address_proof/{0}.pdf".format(session_data[
-            "user_id"])
+        file_name3 = "./public/storage/address_proof/{0}.pdf".format(
+            session_data["user_id"])
         with open(file_name3, "wb") as f:
             f.write(address_proof)
         query = """update profile set first_name = ?, last_name = ?, email =?,
