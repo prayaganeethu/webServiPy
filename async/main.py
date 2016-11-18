@@ -102,17 +102,24 @@ def profile(request, response):
         print("in profile")
         data = html_head()
         get_query = "select count(*) from profile where id=(?)"
-        c.execute(get_query, (session_data["user_id"],))
+        print(session_data["user_id"])
+        if "content" in request and "id" in request["content"] and session_data["user_id"] == "5820148e514cff820b882897":
+            u_id = request["content"]["id"]
+        else:
+            u_id = session_data["user_id"]
+        c.execute(get_query, (u_id,))
         (no_rows,) = c.fetchone()
+        print("here now")
         if no_rows:
             query = "select * from profile where id=(?)"
-            c.execute(query, (session_data["user_id"],))
+            c.execute(query, (u_id,))
             res = c.fetchall()
             if res[0][1]:
                 with open("./views/profile.html", "r") as f:
                     data = f.read()
                 print("data")
-                data = data.format(id=res[0][0],fname=res[0][1], lname=res[0][2], email=res[0][3], address=res[0][4], hometown=res[0][5],date_of_birth=res[0][6], date_of_joining=res[0][7])
+                data = data.format(id=res[0][0], fname=res[0][1], lname=res[0][2], email=res[0][3], address=res[
+                                   0][4], hometown=res[0][5], date_of_birth=res[0][6], date_of_joining=res[0][7])
                 print("welcome")
                 return server.send_html_handler(request, response, data)
         return update(request, response)
