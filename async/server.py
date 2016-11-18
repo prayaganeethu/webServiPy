@@ -385,7 +385,6 @@ async def handle_connections(reader, writer):
     if content_length:
         content = await reader.readexactly(content_length)
         data += content
-        print(content)
     response = await worker(data, addr)
     writer.write(response)
     await writer.drain()
