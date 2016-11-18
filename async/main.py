@@ -100,11 +100,18 @@ def profile(request, response):
     if session_data and "user_id" in session_data:
         data = html_head()
         get_query = "select count(*) from profile where id=(?)"
-        c.execute(get_query, (session_data["user_id"],))
+        print("id" in request["content"] and request["content"][
+              "id"] and session_data["user_id"] == "5820148e514cff820b882897")
+        if "id" in request["content"] and request["content"]["id"] and session_data["user_id"] == "5820148e514cff820b882897":
+            id = request["content"]["id"]
+            c.execute(get_query, (request["content"]["id"],))
+        else:
+            id = session_data["user_id"]
+            c.execute(get_query, (session_data["user_id"],))
         (no_rows,) = c.fetchone()
         if no_rows:
             query = "select * from profile where id=(?)"
-            c.execute(query, (session_data["user_id"],))
+            c.execute(query, (id,))
             res = c.fetchall()
             if res[0][1]:
                 data += "<p>Name: {0} {1}</p><br/>".format(
@@ -115,7 +122,7 @@ def profile(request, response):
                 data += "<p>Hometown: {0}</p><br/>".format(res[0][5])
                 data += "<p>Date of joining: {0}</p><br/>".format(res[0][7])
                 data += """<img src='./storage/profile_pic/{0}.jpg' width='200px' height='200px'/>
-                        <br/>""".format(session_data["user_id"])
+                        <br/>""".format(id)
                 data += "<a href='/update'>Update details here</a>"
                 data += html_tail()
                 return server.send_html_handler(request, response, data)
