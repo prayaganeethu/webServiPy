@@ -4,38 +4,38 @@ import json
 
 score=0
 
-def makeTemplate(q,qno,opt1,opt2,opt3,opt4):
-    # r = []
-    # r.append(qno)
-    with open("./public/html/pyExam.html", "r") as file_descriptor:
-            res = file_descriptor.read()
-    result = res.format(q,opt1,opt2,opt3,opt4)
-    # r.append(result)
-    return result
+# def makeTemplate(q,qno,opt1,opt2,opt3,opt4):
+#     # r = []
+#     # r.append(qno)
+#     with open("./public/html/pyExam.html", "r") as file_descriptor:
+#             res = file_descriptor.read()
+#     result = res.format(q,opt1,opt2,opt3,opt4)
+#     # r.append(result)
+#     return result
 
-def makeQuestionBlocks(questObj):
-    # print(questObj)
-    q = questObj[0]["Question"]
-    qno = questObj[0]["QNo"]
-    opt1 = questObj[0]["AnsOpt1"]
-    opt2 = questObj[0]["AnsOpt2"]
-    opt3 = questObj[0]["AnsOpt3"]
-    opt4 = questObj[0]["AnsOpt4"]
-    return makeTemplate(q,qno,opt1,opt2,opt3,opt4)
+# def makeQuestionBlocks(questObj):
+#     # print(questObj)
+#     q = questObj[0]["Question"]
+#     qno = questObj[0]["QNo"]
+#     opt1 = questObj[0]["AnsOpt1"]
+#     opt2 = questObj[0]["AnsOpt2"]
+#     opt3 = questObj[0]["AnsOpt3"]
+#     opt4 = questObj[0]["AnsOpt4"]
+#     return makeTemplate(q,qno,opt1,opt2,opt3,opt4)
 
 def showQuestionPost(request, response):
     # request['content']['Opt']
     data = db.show_Quest_pyExam()
-    htmlcode = makeQuestionBlocks(data)
+    # htmlcode = makeQuestionBlocks(data)
     # htmlcode = val[1]
-    return server.send_html_handler(request, response, htmlcode)
+    return server.send_html_handler(request, response, data)
 
 
 
 def showQuestion(request, response):
     # print("\n\n\nrequest",request['content'])
     data = db.show_Quest_pyExam()
-    htmlcode = makeQuestionBlocks(data)
+    # htmlcode = makeQuestionBlocks(data)
     # json_data = json.dumps(dict(data))
     # json_data = json.dumps(data)
     # print(json_data)
@@ -59,7 +59,7 @@ def showQuestion(request, response):
     #     </form>
     # </body>
     # </html>""" %(data['Question'],data['AnsOpt1'],data['AnsOpt2'],data['AnsOpt3'],data['AnsOpt4'])
-    return server.send_html_handler(request, response, htmlcode)
+    return server.send_json_handler(request, response, data)
 
 #def showNextQuestion(request,response):
     #global qnum
