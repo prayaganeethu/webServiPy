@@ -42,7 +42,7 @@ def view_questions_pyExam():
     return cursor.fetchall()
 
 def show_Quest_pyExam():
-    my_query = query_db("SELECT * FROM pyQuestionsMCQ ORDER BY RANDOM() LIMIT ?", (3,), one=True)
+    my_query = query_db("SELECT * FROM pyQuestionsMCQ ORDER BY RANDOM() LIMIT ?", (1,), one=True)
     print("my_query")
     print(my_query)
     return my_query
