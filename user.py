@@ -24,7 +24,7 @@ score=0
 #     return makeTemplate(q,qno,opt1,opt2,opt3,opt4)
 
 def showQuestionPost(request, response):
-    # request['content']['Opt']
+    print(request['content'])
     data = db.show_Quest_pyExam()
     # htmlcode = makeQuestionBlocks(data)
     # htmlcode = val[1]

@@ -44,7 +44,7 @@ def adminPage(request, response):
 
 
 def login(request, response):
-    with open("./public/html/pyExamLogin.html", "rb") as file_descriptor:
+    with open("./public/html/index.html", "rb") as file_descriptor:
             res = file_descriptor.read()
     return server.send_html_handler(request,response, res)
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>example</title>
+</head>
+<body>
+<div id = "main">
+<button type="button" onclick='loadDoc()'>click me</button>
+</div>
+<script type="text/javascript">
+
+    function loadDoc() {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if(this.readyState === 4 && status === 200) {
+                document.getElementById('main').innerHTML = this.responseText;
+                console.log(this.responseText);
+            }
+        }
+
+        xmlHttp.open("GET","./testPython",true);
+        xmlHttp.send();
+    }
+
+</script>
+</body>
+</html>
